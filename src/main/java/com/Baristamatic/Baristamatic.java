@@ -15,15 +15,14 @@ public class Baristamatic {
         Inventory thisInventory = InventoryImplFactory.createInventory();
 
         while(true) {
-            // At program startup, and following the processing of every command,
-            // the machine inventory and the drink menu should be displayed.
+            // Display menu at startup
             thisInventory.displayMenu();
 
             try {
 
                 String userInput = "";
 
-                // Blank input lines should be ignored
+                // Ignore blank inputs
                 while(userInput.length() <= 0)
                     userInput = keyboard.nextLine().trim();
 
@@ -40,10 +39,10 @@ public class Baristamatic {
                     try {
                         int drinkNumber = Integer.valueOf(userInput);
 
-                        // do not allow input of type "001"
+                        // Dont allow leading 0
                         boolean zerosAtStart = (userInput.charAt(0)!= '0');
 
-                        // [1-6] - order the drink with the corresponding number in the menu
+                        // Enter drink number
                         if ((zerosAtStart) && ((drinkNumber > 0) && (drinkNumber <= thisInventory.getDrinkNames().size()))) {
 
                             if (!thisInventory.isDrinkInStock(drinkNumber-1)) {
@@ -54,25 +53,24 @@ public class Baristamatic {
                             }
 
                         } else {
-                            // Because drink-number does not exist.
+                            // Invalid drink number
                             System.out.println("Invalid selection: "+userInput);
 
-                        } // inner if-else conditions
+                        }
 
                     } catch (NumberFormatException e) {
-                        // Because we didn't get a number.
+                        // Number was not entered
                         System.out.println("Invalid selection: "+userInput);
 
-                    } // inner try-catch
-
-                } // outer if-else conditions
+                    }
+                }
 
             } catch (Exception e) {
                 // Problem reading from standard input or something else
                 System.out.println(e.getMessage());
 
-            } //  outer try-catch
-        } // while-loop
+            }
+        }
 
 
         try {
